@@ -1,0 +1,223 @@
+<% layout("/layouts/boilerplate")%>
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+
+    
+    <h3>Edit your listing</h3>
+    <form method = "POST" action = "/listings/<%= listing._id%>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input 
+                id="title"
+                name = "listing[title]" 
+                value = "<%= listing.title %>" 
+                type = "text" class="form-control" 
+                required/>
+                <div class="valid-feedback">Title looks good</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea 
+                id="description"
+                name = "listing[description]" 
+                rows="6"
+                class="form-control" 
+                required><%= listing.description %></textarea>
+
+                <div class="mt-3">
+    <label for="tone" class="form-label">
+        AI Writing Style
+    </label>
+
+    <select
+        id="tone"
+        class="form-select">
+
+        <option value="Professional" selected>Professional</option>
+        <option value="Luxury">Luxury Stay</option>
+        <option value="Romantic">Romantic Getaway</option>
+        <option value="Family">Family Friendly</option>
+        <option value="Adventure">Adventure</option>
+        <option value="Budget">Budget Stay</option>
+        <option value="Relaxing">Relaxing Vacation</option>
+        <option value="Business">Business Travel</option>
+        <option value="Cozy">Cozy Cottage</option>
+        <option value="Nature">Nature Escape</option>
+
+    </select>
+</div>
+
+<div class="d-flex gap-2 mt-3">
+
+    <button
+        type="button"
+        id="generateAI"
+        class="btn btn-outline-secondary btn-sm">
+        ✨ Generate with AI
+    </button>
+
+    <button
+        type="button"
+        id="improveAI"
+        class="btn btn-outline-secondary btn-sm">
+        ✨ Improve with AI
+    </button>
+
+    <button
+        type="button"
+        id="regenerateAI"
+        class="btn btn-outline-secondary btn-sm">
+        🔄 Regenerate
+    </button>
+
+</div>
+
+<small
+    id="aiStatus"
+    class="text-muted mt-2 d-block">
+</small>
+
+        <div class="invalid-feedback">Description is required</div> 
+        </div>
+
+
+        <div class="mb-3">
+            Original Listing Image <br/>
+            <img src="<%= originalImageUrl %>"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload New Image</label>
+            <input 
+                name = "listing[image]" 
+                type = "file" 
+                class="form-control"/>
+        </div>
+
+        <div class="mb-3">
+    <label class="form-label">Category</label>
+
+    <select
+        id="category"
+        class="form-select"
+        name="listing[category]"
+        required
+    >
+
+        <option value="Trending"
+        <%= listing.category==="Trending" ? "selected" : "" %>>
+        Trending
+        </option>
+
+        <option value="Rooms"
+        <%= listing.category==="Rooms" ? "selected" : "" %>>
+        Rooms
+        </option>
+
+        <option value="Iconic Cities"
+        <%= listing.category==="Iconic Cities" ? "selected" : "" %>>
+        Iconic Cities
+        </option>
+
+        <option value="Mountains"
+        <%= listing.category==="Mountains" ? "selected" : "" %>>
+        Mountains
+        </option>
+
+        <option value="Castles"
+        <%= listing.category==="Castles" ? "selected" : "" %>>
+        Castles
+        </option>
+
+        <option value="Amazing Pools"
+        <%= listing.category==="Amazing Pools" ? "selected" : "" %>>
+        Amazing Pools
+        </option>
+
+        <option value="Camping"
+        <%= listing.category==="Camping" ? "selected" : "" %>>
+        Camping
+        </option>
+
+        <option value="Farms"
+        <%= listing.category==="Farms" ? "selected" : "" %>>
+        Farms
+        </option>
+
+        <option value="Arctic"
+        <%= listing.category==="Arctic" ? "selected" : "" %>>
+        Arctic
+        </option>
+
+        <option value="Domes"
+        <%= listing.category==="Domes" ? "selected" : "" %>>
+        Domes
+        </option>
+
+        <option value="Boats"
+        <%= listing.category==="Boats" ? "selected" : "" %>>
+        Boats
+        </option>
+
+        <option value="Beach"
+        <%= listing.category==="Beach" ? "selected" : "" %>>
+        Beach
+        </option>
+
+        <option value="Desert"
+        <%= listing.category==="Desert" ? "selected" : "" %>>
+        Desert
+        </option>
+
+        <option value="Snow"
+        <%= listing.category==="Snow" ? "selected" : "" %>>
+        Snow
+        </option>
+
+    </select>
+</div>
+
+        <div class="row">
+         <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input 
+                name = "listing[price]" 
+                value = "<%= listing.price %>" 
+                type="number" 
+                class="form-control" 
+                required/>
+                <div class="invalid-feedback">Price should be a valid number</div>
+         </div>
+       
+        <div class="mb-3 col-md-8">
+            <label for="country" class="form-label">Country</label>
+            <input 
+                id="country"
+                name = "listing[country]" 
+                value = "<%= listing.country %>" 
+                type="text" 
+                class="form-control" 
+                required/>
+                <div class="invalid-feedback">Country should be valid</div>
+        </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input 
+                id="location"
+                name = "listing[location]" 
+                value = "<%= listing.location %>" 
+                type="text" 
+                class="form-control" 
+                required/>
+                <div class="invalid-feedback">Location should be valid</div>
+        </div>
+        
+    <button class="btn btn-dark edit-btn mt-3">Edit</button>
+    </form>
+</div>
+</div>
+
+<script src="/js/ai.js"></script>

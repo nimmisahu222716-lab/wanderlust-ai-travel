@@ -1,0 +1,302 @@
+<% layout("/layouts/boilerplate")%>
+
+<style>
+    
+
+.filters-container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:2rem;
+    margin-top:1rem;
+}
+
+#filters{
+    display:flex;
+    align-items:center;
+    gap:.4rem;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    flex-wrap:nowrap;
+
+    scrollbar-width:none;
+
+    flex:1;
+}
+
+#filters::-webkit-scrollbar{
+    display:none;
+}
+
+.filter {
+    flex: 0 0 auto;
+    text-align: center;
+    margin-right: 0;
+    margin-top: 1rem;
+    opacity: 0.75;
+    color: black;
+    padding: 0.6rem 0.9rem;
+    border-radius: 18px;
+    transition: all 0.25s ease;
+}
+
+    .filter:hover{
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .filter-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.filter-link:hover {
+    color: inherit;
+}
+
+.filter.active{
+    background:#F8F4FF;
+    border:1px solid #E9D5FF;
+    color:#5F4B8B;
+    opacity:1;
+}
+
+/* .filter.active i,
+.filter.active p {
+    color: #444;
+} */
+
+.filter {
+    transition: all 0.25s ease;
+}
+
+.filter:hover{
+    opacity:1;
+    cursor:pointer;
+    transform:translateY(-2px);
+}
+
+.filter p{
+    font-size:0.82rem;
+    margin-top:0.35rem;
+    margin-bottom:0;
+}
+
+.filter i{
+    font-size:1.15rem;
+}
+
+    .tax-info{
+        display: none;
+    }
+
+   .tax-toggle{
+    flex-shrink:0;
+
+    border:1px solid #ddd;
+
+    border-radius:16px;
+
+    padding:.8rem 1rem;
+
+    background:white;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+    .filter-link {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+}
+
+.filter-link:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.filter-link:visited {
+    color: black;
+}
+
+.filter-link:active {
+    color: black;
+}
+
+.listing-link{
+    text-decoration:none;
+    color:inherit;
+}
+
+.listing-link:hover{
+    text-decoration:none;
+    color:inherit;
+}
+
+.listing-card{
+    border:none !important;
+    margin-bottom:2rem;
+    transition:all .25s ease;
+}
+
+.listing-card:hover{
+    transform:translateY(-4px);
+}
+
+.card-img-top{
+    border-radius:18px;
+    object-fit:cover;
+}
+</style>
+
+
+
+<div class="filters-container">
+<div id="filters">
+
+       
+
+<a href="/listings?search=<%= search || '' %>" class="filter-link">
+    <div class="filter <%= !category ? 'active' : '' %>">
+        <i class="fa-solid fa-border-all"></i>
+        <p>All</p>
+    </div>
+</a>
+
+<a href="/listings?search=<%= search || '' %>&category=Trending" class="filter-link">
+    <div class="filter <%= category === 'Trending' ? 'active' : '' %>">
+        <i class="fa-solid fa-fire"></i>
+        <p>Trending</p>
+    </div>
+</a>
+
+<a href="/listings?search=<%= search || '' %>&category=Rooms" class="filter-link">
+    <div class="filter <%= category === 'Rooms' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <p>Rooms</p>
+    </div>
+</a>
+
+<a href="/listings?search=<%= search || '' %>&category=Iconic Cities" class="filter-link">
+    <div class="filter <%= category === 'Iconic Cities' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p>Iconic Cities</p>
+    </div>
+</a>
+
+
+    <a href="/listings?search=<%= search || '' %>&category=Mountains" class="filter-link">
+    <div class="filter <%= category === 'Mountains' ? 'active' : '' %>">
+        <i class="fa-solid fa-mountain"></i>
+        <p>Mountains</p>
+    </div>
+</a>
+
+<a href="/listings?search=<%= search || '' %>&category=Castles" class="filter-link">
+    <div class="filter <%= category === 'Castles' ? 'active' : '' %>">
+        <div><i class="fa-brands fa-fort-awesome"></i></div>
+        <p>Castles</p>
+    </div>
+</a>
+
+<a href="/listings?search=<%= search || '' %>&category=Arctic" class="filter-link">
+    <div class="filter <%= category === 'Arctic' ? 'active' : '' %>">
+        <div><i class="fa-regular fa-snowflake"></i></div>
+        <p>Arctic</p>
+    </div>
+</a>
+
+<a href="/listings?search=<%= search || '' %>&category=Camping" class="filter-link">
+    <div class="filter <%= category === 'Camping' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-campground"></i></div>
+        <p>Camping</p>
+    </div>
+</a>
+
+<a href="/listings?search=<%= search || '' %>&category=Farms" class="filter-link">
+    <div class="filter <%= category === 'Farms' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-cow"></i></div>
+        <p>Farms</p>
+    </div>
+</a>
+
+   <a href="/listings?search=<%= search || '' %>&category=Amazing Pools" class="filter-link">
+    <div class="filter <%= category === 'Amazing Pools' ? 'active' : '' %>">
+        <i class="fa-solid fa-person-swimming"></i>
+        <p>Amazing Pools</p>
+    </div>
+</a>
+
+ <a href="/listings?category=Domes" class="filter-link">
+   <div class="filter <%= category === 'Domes' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-igloo"></i></div>
+        <p>Domes</p>
+    </div>
+</a>
+
+<a href="/listings?category=Boats" class="filter-link">
+    <div class="filter <%= category === 'Boats' ? 'active' : '' %>">
+        <div><i class="fa-solid fa-sailboat"></i></div>
+        <p>Boats</p>
+    </div>
+</a>
+
+</div>
+
+    
+    <div class="tax-toggle">
+        <div class="form-check-reverse form-switch">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+        </div>
+    </div>
+</div>
+
+    
+
+
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(let listing of allListings){%>   
+         <a href="/listings/<%= listing._id %>" class="listing-link">
+        <div class="card col listing-card" >
+          <img 
+            src="<%= listing.image.url %>" 
+            class="card-img-top" 
+            alt="listing_image" 
+            style="height: 20rem"
+            />
+          <div class="card-img-overlay">abcd</div>
+           <div class="card-body">
+             <p class="card-text">
+              <b><%= listing.title %></b><br/>
+              &#8377; <%= listing.price%> / night
+              <i class="tax-info">&nbsp; &nbsp;+18% GST</i>
+             </p>
+            </div>
+        </div>
+        </a>
+    <%}%>  
+</div>    
+
+<script>
+    let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+    taxSwitch.addEventListener("click", () => {
+        let taxInfo = document.getElementsByClassName("tax-info");
+        for(info of taxInfo){
+            if(info.style.display != "inline"){
+                info.style.display = "inline";
+            }else{
+                info.style.display = "none";
+            }
+            
+        }
+    });
+
+    
+
+</script>
+
+
