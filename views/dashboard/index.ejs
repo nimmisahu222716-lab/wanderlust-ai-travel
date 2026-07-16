@@ -1,0 +1,177 @@
+<% layout("/layouts/boilerplate") %>
+
+<h2 class="mb-4">
+    🏠 Host Dashboard
+</h2>
+
+<div class="row g-4">
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center">
+
+                <h5>🏡 Listings</h5>
+
+                <h2><%= totalListings %></h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center">
+
+                <h5>📅 Bookings</h5>
+
+                <h2><%= totalBookings %></h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center">
+
+                <h5>💰 Revenue</h5>
+
+                <h2>₹<%= totalRevenue.toLocaleString("en-IN") %></h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm border-success">
+
+            <div class="card-body text-center">
+
+                <h5>🟢 Available Listings</h5>
+
+                <h2><%= availableListings %></h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm border-danger">
+
+            <div class="card-body text-center">
+
+                <h5>🔴 Unavailable Listings</h5>
+
+                <h2><%= unavailableListings %></h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr class="my-5">
+
+<h3 class="mb-4">
+
+    📅 Recent Bookings
+
+</h3>
+
+<% if(recentBookings.length === 0){ %>
+
+<div class="alert alert-info">
+
+    No bookings yet.
+
+</div>
+
+<% } else { %>
+
+<div class="table-responsive">
+
+<table class="table table-bordered align-middle">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Guest</th>
+
+<th>Property</th>
+
+<th>Check-In</th>
+
+<th>Check-Out</th>
+
+<th>Total</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% recentBookings.forEach(booking => { %>
+
+<tr>
+
+<td>
+
+<%= booking.user.username %>
+
+</td>
+
+<td>
+
+<%= booking.listing.title %>
+
+</td>
+
+<td>
+
+<%= booking.checkIn.toLocaleDateString("en-IN") %>
+
+</td>
+
+<td>
+
+<%= booking.checkOut.toLocaleDateString("en-IN") %>
+
+</td>
+
+<td>
+
+₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+
+<% } %>
+
+</div>

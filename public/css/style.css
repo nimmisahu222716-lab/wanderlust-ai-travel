@@ -131,3 +131,45 @@ body{
     width: 80vh;
     margin-bottom: 2rem;
 }
+
+/* ============================= */
+/* AI Travel Assistant */
+/* ============================= */
+
+.ai-chip{
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    color: #444;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    cursor: default;
+    transition: all 0.25s ease;
+}
+
+.ai-chip:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+}
+
+.ai-welcome-card{
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+}
+
+#chatBox{
+    background:#f8f9fa;
+    border-radius:20px;
+}
+
+.ai-title{
+    font-weight:700;
+}
+
+.ai-subtitle{
+    color:#6c757d;
+    font-size:15px;
+}

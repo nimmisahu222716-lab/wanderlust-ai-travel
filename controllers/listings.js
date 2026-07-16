@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const User = require("../models/user");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({accessToken: mapToken});
@@ -38,22 +39,39 @@ module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
 };
 
-module.exports.showListing = async(req, res)=>{
-    let {id} = req.params;
+module.exports.showListing = async (req, res) => {
+
+    let { id } = req.params;
+
     const listing = await Listing.findById(id)
-    .populate({
-        path:"reviews",
-        populate: {
-            path: "author",
-        },
-     })
-    .populate("owner");
-    if(!listing){
+        .populate({
+            path: "reviews",
+            populate: {
+                path: "author",
+            },
+        })
+        .populate("owner");
+
+    if (!listing) {
         req.flash("error", "Listing you requested for does not exist");
         return res.redirect("/listings");
     }
-    console.log(listing);
-    res.render("listings/show.ejs", {listing} );
+
+    let isWishlisted = false;
+
+    if (req.user) {
+
+        const user = await User.findById(req.user._id);
+
+        isWishlisted = user.wishlist.includes(listing._id);
+
+    }
+
+    res.render("listings/show.ejs", {
+        listing,
+        isWishlisted
+    });
+
 };
 
 // module.exports.createListing = async (req, res, next) => {
@@ -102,6 +120,8 @@ module.exports.createListing = async (req, res, next) => {
 
         let url = req.file.path;
         let filename = req.file.filename;
+
+       
 
         const newListing = new Listing(req.body.listing);
 
@@ -152,17 +172,30 @@ module.exports.renderEditForm = async(req, res)=>{
     res.render("listings/edit.ejs", {listing, originalImageUrl});
 };
 
-module.exports.updateListing = async(req, res) =>{
-    let {id} = req.params;
-    let listing = await Listing.findByIdAndUpdate(id, {...req.body.listing});
+module.exports.updateListing = async (req, res) => {
 
-    if(typeof req.file !== "undefined"){
-       let url = req.file.path;
-       let filename = req.file.filename;
-       listing.image = {url, filename};
-       await listing.save();
+    let { id } = req.params;
+
+   
+
+    let listing = await Listing.findByIdAndUpdate(
+        id,
+        { ...req.body.listing },
+        { new: true }
+    );
+
+    if (typeof req.file !== "undefined") {
+
+        let url = req.file.path;
+        let filename = req.file.filename;
+
+        listing.image = { url, filename };
+
+        await listing.save();
     }
+
     req.flash("success", "Listing Updated");
+
     res.redirect(`/listings/${id}`);
 };
 

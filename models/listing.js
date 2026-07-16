@@ -14,6 +14,16 @@ const listingSchema = new Schema({
     },
     
     price: Number,
+    maxGuests: {
+    type: Number,
+    required: true,
+    default: 4,
+    min: 1
+},
+isAvailable: {
+    type: Boolean,
+    default: true
+},
     location: String,
     country: String,
     category: {

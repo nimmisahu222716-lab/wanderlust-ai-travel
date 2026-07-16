@@ -139,6 +139,7 @@
     border:none !important;
     margin-bottom:2rem;
     transition:all .25s ease;
+    position: relative;
 }
 
 .listing-card:hover{
@@ -268,7 +269,22 @@
             alt="listing_image" 
             style="height: 20rem"
             />
-          <div class="card-img-overlay">abcd</div>
+          <div class="card-img-overlay d-flex justify-content-end">
+
+    <form
+        action="/wishlist/<%= listing._id %>"
+        method="POST">
+
+        <button
+            class="btn border-0 bg-transparent fs-4">
+
+            🤍
+
+        </button>
+
+    </form>
+
+</div>
            <div class="card-body">
              <p class="card-text">
               <b><%= listing.title %></b><br/>

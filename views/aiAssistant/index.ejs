@@ -1,0 +1,95 @@
+<% layout("/layouts/boilerplate") %>
+
+<h2 class="mb-2">
+    🤖 AI Travel Assistant
+</h2>
+
+<p class="text-muted mb-4">
+    Ask anything about destinations, hotels, food, budgets, transport or travel tips.
+</p>
+
+<div
+    id="chatBox"
+    class="border rounded-4 p-3 mb-3"
+    style="
+        height: 500px;
+        overflow-y: auto;
+        background: #f8f9fa;
+    "
+>
+
+    
+    <div class="mb-3">
+
+        <div class="p-3 rounded-4 bg-white shadow-sm">
+
+            <h5 class="mb-3">👋 Welcome to Wanderlust AI</h5>
+
+            <p class="mb-3">
+                I'm your personal travel assistant. Ask me anything related to travel.
+            </p>
+
+            <hr>
+
+            <p class="text-muted small mb-3">
+                <strong>Suggested topics you can ask about:</strong>
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+
+                <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    🏖️ Best Beaches
+                </span>
+
+                <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    🍽️ Local Food
+                </span>
+
+                <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    💰 Budget Planning
+                </span>
+
+                <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    🚆 Transport
+                </span>
+
+                <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    🧳 Packing Guide
+                </span>
+
+                <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    📅 Best Time to Visit
+                </span>
+
+            </div>
+
+            <p class="text-muted small mt-3 mb-0">
+    💡 <strong>Note:</strong> Ask only travel-related questions. The assistant remembers only the recent conversation (up to the last 10 messages). Starting a new session begins a fresh conversation.
+</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Input Box -->
+<div class="input-group">
+
+    <textarea
+        id="question"
+        class="form-control"
+        rows="2"
+        placeholder="Ask your travel question..."
+    ></textarea>
+
+    <button
+        class="btn btn-dark"
+        id="askAI"
+    >
+        Send
+    </button>
+
+</div>
+
+<script src="/js/aiAssistant.js"></script>

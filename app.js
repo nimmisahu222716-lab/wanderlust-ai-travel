@@ -16,6 +16,8 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const aiAssistantRouter = require("./routes/aiAssistant");
+const wishlistRouter = require("./routes/wishlist");
 
 
 const listingRouter = require("./routes/listing.js");
@@ -23,6 +25,8 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const aiRouter = require("./routes/ai.js");
 const tripPlannerRouter = require("./routes/tripPlanner");
+const bookingRouter = require("./routes/booking");
+const dashboardRouter = require("./routes/dashboard");
 const Stream = require('stream');
 
 
@@ -88,11 +92,30 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req, res, next) => {
+const Listing = require("./models/listing");
+
+app.use(async (req, res, next) => {
+
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
+
+    res.locals.isHost = false;
+
+    if (req.user) {
+
+        const hostListing = await Listing.findOne({
+            owner: req.user._id
+        });
+
+        if (hostListing) {
+            res.locals.isHost = true;
+        }
+
+    }
+
     next();
+
 });
 
 // app.get("/demouser", async(req, res) => {
@@ -110,6 +133,10 @@ app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 app.use("/ai", aiRouter);
 app.use("/trip-planner", tripPlannerRouter);
+app.use("/ai-assistant", aiAssistantRouter);
+app.use("/wishlist", wishlistRouter);
+app.use("/bookings", bookingRouter);
+app.use("/dashboard", dashboardRouter);
 
 app.all("/{*splat}", (req, res, next)=>{
     next(new ExpressError(404, "Page Not Found"));

@@ -5,9 +5,29 @@
     
 </script>
 <div class="row mt-3">
-    <div class="col-8 offset-3">
-       <h3><%= listing.title%></h3>
-    </div>
+    <div class="col-8 offset-3 d-flex justify-content-between align-items-center">
+
+    <h3 class="mb-0">
+        <%= listing.title %>
+    </h3>
+
+    <% if(currUser){ %>
+
+        <form action="/wishlist/<%= listing._id %>" method="POST">
+
+            <button
+                class="btn border-0 bg-transparent fs-2"
+                title="Add to Wishlist">
+
+                <%= isWishlisted ? "❤️" : "🤍" %>
+
+            </button>
+
+        </form>
+
+    <% } %>
+
+</div>
     <div class="card col-6 offset-3 show-card listing-card">
         <img 
             src="<%= listing.image.url %>" 
@@ -17,7 +37,38 @@
         <div class="card-body">
             <p class="card-text">Owned by : <i><%= listing.owner.username %></i></p>
             <p class="card-text"><%= listing.description%></p>
-            <p class="card-text">&#8377;<%= listing.price%></p>
+            <p class="card-text">
+    💰 ₹<%= listing.price %> / night
+</p>
+
+<p class="card-text">
+    👥 Maximum Guests:
+    <strong><%= listing.maxGuests %></strong>
+</p>
+
+<p class="card-text">
+
+    <% if(listing.isAvailable){ %>
+
+        🟢 <strong>Available for Booking</strong>
+
+    <% } else { %>
+
+        🔴 <strong>Currently Unavailable</strong>
+
+    <% } %>
+
+    <% if(currUser && listing.owner._id.equals(currUser._id)){ %>
+
+        <br>
+        <small class="text-muted">
+            You can change this from the Edit Listing page.
+        </small>
+
+    <% } %>
+
+</p>
+
             <p class="card-text"><%= listing.location%></p>
             <p class="card-text"><%= listing.country%></p>
         </div>
@@ -26,17 +77,154 @@
     
     <br/>
 
-    <% if(currUser && listing.owner._id.equals(currUser._id)) {%>
-    <div class="btns">
-        <a href = "/listings/<%= listing._id%>/edit" 
-            class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
-       
-    
-        <form method = "POST" action="/listings/<%=listing._id%>?_method=DELETE">
-            <button class="btn btn-dark offset-5">Delete</button>
-        </form>
-   </div>
-   <%}%>
+<!-- Booking Form (Only for logged-in users who are NOT the owner AND listing is available) -->
+
+<% if(currUser && !listing.owner._id.equals(currUser._id) && listing.isAvailable){ %>
+
+<div class="col-6 offset-3 mb-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                📅 Reserve this stay
+            </h4>
+
+            <form
+                action="/bookings/<%= listing._id %>"
+                method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Check-in
+                    </label>
+
+                   <input
+    type="date"
+    id="checkIn"
+    name="checkIn"
+    class="form-control"
+    required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Check-out
+                    </label>
+
+                    <input
+    type="date"
+    id="checkOut"
+    name="checkOut"
+    class="form-control"
+    required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Guests
+                    </label>
+
+                    <input
+                        type="number"
+                        name="guests"
+                        class="form-control"
+                        value="1"
+                        min="1"
+                        required>
+
+                </div>
+
+                <hr>
+
+<div id="bookingSummary">
+
+    <p class="mb-1">
+        💰 ₹<%= listing.price %> ×
+        <span id="totalNights">0</span> night(s)
+    </p>
+
+    <h5>
+        Total:
+        ₹<span id="totalPrice">0</span>
+    </h5>
+
+</div>
+
+                <button
+                    class="btn btn-dark w-100">
+
+                    Reserve Now
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<% } %>
+
+
+<!-- Show this when property is NOT available -->
+
+<% if(currUser && !listing.owner._id.equals(currUser._id) && !listing.isAvailable){ %>
+
+<div class="col-6 offset-3 mb-4">
+
+    <div class="alert alert-warning">
+
+        <h5>🔴 Booking Unavailable</h5>
+
+        <p class="mb-0">
+            This property is currently not accepting bookings.
+        </p>
+
+    </div>
+
+</div>
+
+<% } %>
+
+
+<!-- Edit/Delete Buttons (Only Owner) -->
+
+<% if(currUser && listing.owner._id.equals(currUser._id)) {%>
+
+<div class="btns">
+
+    <a
+        href="/listings/<%= listing._id %>/edit"
+        class="btn btn-dark col-1 offset-3 edit-btn">
+
+        Edit
+
+    </a>
+
+    <form
+        method="POST"
+        action="/listings/<%= listing._id %>?_method=DELETE">
+
+        <button class="btn btn-dark offset-5">
+
+            Delete
+
+        </button>
+
+    </form>
+
+</div>
+
+<% } %>
   
   
    <div class="col-8 offset-3 mb-3">
@@ -119,5 +307,77 @@
         <div id="map"></div>
     </div>
 </div>
+
+<script>
+
+const today = new Date().toISOString().split("T")[0];
+
+const checkIn = document.getElementById("checkIn");
+const checkOut = document.getElementById("checkOut");
+
+const totalNights = document.getElementById("totalNights");
+const totalPrice = document.getElementById("totalPrice");
+
+function updateBookingSummary() {
+
+    if (!checkIn.value || !checkOut.value) {
+
+        totalNights.textContent = 0;
+        totalPrice.textContent = 0;
+
+        return;
+    }
+
+    const start = new Date(checkIn.value);
+    const end = new Date(checkOut.value);
+
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    const nights = Math.ceil((end - start) / oneDay);
+
+    if (nights <= 0) {
+
+        totalNights.textContent = 0;
+        totalPrice.textContent = 0;
+
+        return;
+    }
+
+    totalNights.textContent = nights;
+
+    totalPrice.textContent =
+        (nights * listing.price).toLocaleString("en-IN");
+
+}
+
+if (checkIn && checkOut) {
+
+    checkIn.min = today;
+
+    checkOut.min = today;
+
+    checkIn.addEventListener("change", () => {
+
+        checkOut.min = checkIn.value;
+
+        if (checkOut.value < checkIn.value) {
+            checkOut.value = "";
+        }
+
+    });
+
+    checkIn.addEventListener(
+    "change",
+    updateBookingSummary
+);
+
+checkOut.addEventListener(
+    "change",
+    updateBookingSummary
+);
+
+}
+
+</script>
 
 <script src="/js/map.js"></script>

@@ -1,0 +1,108 @@
+<% layout("/layouts/boilerplate") %>
+
+<h2 class="mb-4">
+    📅 My Bookings
+</h2>
+
+<% if(bookings.length === 0){ %>
+
+    <div class="alert alert-info">
+        You haven't made any bookings yet.
+    </div>
+
+<% } else { %>
+
+<div class="row">
+
+<% bookings.forEach(booking => { %>
+
+<div class="col-md-6 mb-4">
+
+    <div class="card shadow-sm">
+
+        <img
+            src="<%= booking.listing.image.url %>"
+            class="card-img-top"
+            style="height:250px; object-fit:cover;">
+
+        <div class="card-body">
+
+            <h5>
+                <%= booking.listing.title %>
+            </h5>
+
+            <p>
+                📅
+                <%= booking.checkIn.toDateString() %>
+
+                →
+
+                <%= booking.checkOut.toDateString() %>
+            </p>
+
+            <p>
+                👥 Guests:
+                <%= booking.guests %>
+            </p>
+
+            <p>
+                💰 Total:
+                ₹<%= booking.totalPrice %>
+            </p>
+
+            <p>
+
+                <% if(booking.status === "Confirmed"){ %>
+
+                    <span class="badge bg-success">
+                        Confirmed
+                    </span>
+
+                <% } else { %>
+
+                    <span class="badge bg-danger">
+                        Cancelled
+                    </span>
+
+                <% } %>
+
+            </p>
+<div class="d-flex justify-content-between">
+
+    <a
+        href="/listings/<%= booking.listing._id %>"
+        class="btn btn-dark">
+
+        View Listing
+
+    </a>
+
+    <% if(booking.status === "Confirmed"){ %>
+
+        <form
+            action="/bookings/cancel/<%= booking._id %>"
+            method="POST">
+
+            <button
+                class="btn btn-outline-danger">
+
+                Cancel Booking
+
+            </button>
+
+        </form>
+
+    <% } %>
+
+</div>
+        </div>
+
+    </div>
+
+</div>
+
+<% }) %>
+
+</div>
+
+<% } %>

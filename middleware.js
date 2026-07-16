@@ -35,14 +35,26 @@ module.exports.isOwner = async(req, res, next) => {
 };
 
 module.exports.validateListing = (req, res, next) => {
-    let {error} = listingSchema.validate(req.body);
-    
-    if(error){
-        let errMsg = error.details.map((el)=> el.message).join(",");
+
+    console.log("===== REQUEST BODY =====");
+    console.log(req.body);
+
+    if (req.body.listing) {
+    req.body.listing.isAvailable =
+        req.body.listing.isAvailable === "on";
+}
+
+    let { error } = listingSchema.validate(req.body);
+
+    if (error) {
+        console.log(error.details);
+
+        let errMsg = error.details.map((el) => el.message).join(",");
+
         throw new ExpressError(400, errMsg);
-    }else{
-        next();
     }
+
+    next();
 };
 
 module.exports.validateReview = (req, res, next) => {
