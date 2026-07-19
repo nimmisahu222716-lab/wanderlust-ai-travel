@@ -17,14 +17,14 @@ WanderLust AI is a full-stack web application that enables users to discover uni
 
 ##  Table of Contents
 
-- [Project Preview](#-project-preview)
-- [Key Highlights](#-key-highlights)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Environment Variables](#-environment-variables)
-- [Feature Showcase](#-feature-showcase)
-- [Future Enhancements](#-future-enhancements)
-- [Author](#-author)
+- [Project Preview](#project-preview)
+- [Key Highlights](#key-highlights)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Feature Showcase](#feature-showcase)
+- [Future Enhancements](#future-enhancements)
+- [Author](#author)
 
 ##  Project Preview
 
@@ -236,8 +236,5 @@ Manage profile information and access personalized account details.
 - Full Stack MERN Developer
 
 - **GitHub:** https://github.com/nimmisahu222716-lab
-- **LinkedIn:** www.linkedin.com/in/nimmi-sahu-511b77324
+- **LinkedIn:** https://www.linkedin.com/in/nimmi-sahu-511b77324
 
-##  Support
-
-If you found this project useful, consider giving it a ⭐ on GitHub.
