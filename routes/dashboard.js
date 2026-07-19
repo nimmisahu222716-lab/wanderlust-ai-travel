@@ -10,4 +10,22 @@ router.get(
     dashboardController.dashboard
 );
 
+router.get(
+    "/bookings",
+    isLoggedIn,
+    dashboardController.manageBookings
+);
+
+router.put(
+    "/bookings/:id/complete",
+    isLoggedIn,
+    dashboardController.completeBooking
+);
+
+router.put(
+    "/bookings/:id/cancel",
+    isLoggedIn,
+    dashboardController.cancelBooking
+);
+
 module.exports = router;

@@ -4,12 +4,25 @@
     const listing = <%- JSON.stringify(listing)%>;
     
 </script>
-<div class="row mt-3">
-    <div class="col-8 offset-3 d-flex justify-content-between align-items-center">
+<div class="row mt-4">
 
-    <h3 class="mb-0">
-        <%= listing.title %>
-    </h3>
+    <div class="col-lg-8 offset-lg-2 d-flex justify-content-between align-items-center mb-3">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                <%= listing.title %>
+            </h2>
+
+            <small class="text-muted">
+
+                <i class="fa-solid fa-location-dot text-danger"></i>
+
+                <%= listing.location %>, <%= listing.country %>
+
+            </small>
+
+        </div>
 
     <% if(currUser){ %>
 
@@ -19,7 +32,15 @@
                 class="btn border-0 bg-transparent fs-2"
                 title="Add to Wishlist">
 
-                <%= isWishlisted ? "❤️" : "🤍" %>
+                <% if(isWishlisted){ %>
+
+<i class="fa-solid fa-heart text-danger"></i>
+
+<% } else { %>
+
+<i class="fa-regular fa-heart"></i>
+
+<% } %>
 
             </button>
 
@@ -28,21 +49,73 @@
     <% } %>
 
 </div>
-    <div class="card col-6 offset-3 show-card listing-card">
+    <div class="card col-lg-8 offset-lg-2 show-card listing-card">
         <img 
             src="<%= listing.image.url %>" 
-            class="card-img-top show-img" 
+           class="card-img-top show-img img-fluid"
             alt="listing_image"
             />
         <div class="card-body">
-            <p class="card-text">Owned by : <i><%= listing.owner.username %></i></p>
+           <div class="card mb-4 border-0 shadow-sm host-card">
+
+    <div class="card-body d-flex align-items-center">
+
+        <% if(listing.owner.image && listing.owner.image.url){ %>
+
+            <img
+                src="<%= listing.owner.image.url %>"
+                class="rounded-circle me-3"
+                width="60"
+                height="60"
+                style="object-fit: cover;">
+<% } else { %>
+
+<div
+    class="rounded-circle bg-secondary d-flex align-items-center justify-content-center me-3"
+    style="width:60px; height:60px;">
+
+    <i class="fa-solid fa-user text-white fs-4"></i>
+
+</div>
+
+<% } %>
+
+        <div>
+
+            <small class="text-muted">
+                Hosted by
+            </small>
+
+            <h5 class="mb-0">
+
+                <a
+                    href="/hosts/<%= listing.owner._id %>"
+                    class="text-decoration-none text-dark">
+
+                    <%= listing.owner.name || listing.owner.username %>
+
+                </a>
+
+            </h5>
+
+        </div>
+
+    </div>
+
+</div>
             <p class="card-text"><%= listing.description%></p>
             <p class="card-text">
-    💰 ₹<%= listing.price %> / night
+    <i class="fa-solid fa-indian-rupee-sign text-success"></i>
+
+₹<%= listing.price.toLocaleString("en-IN") %>
+
+<span class="text-muted">/ night</span>
 </p>
 
 <p class="card-text">
-    👥 Maximum Guests:
+    <i class="fa-solid fa-user-group text-primary"></i>
+
+Maximum Guests:
     <strong><%= listing.maxGuests %></strong>
 </p>
 
@@ -50,11 +123,11 @@
 
     <% if(listing.isAvailable){ %>
 
-        🟢 <strong>Available for Booking</strong>
+       <i class="fa-solid fa-circle-check text-success"></i> <strong>Available for Booking</strong>
 
     <% } else { %>
 
-        🔴 <strong>Currently Unavailable</strong>
+        <i class="fa-solid fa-circle-xmark text-danger"></i> <strong>Currently Unavailable</strong>
 
     <% } %>
 
@@ -69,8 +142,7 @@
 
 </p>
 
-            <p class="card-text"><%= listing.location%></p>
-            <p class="card-text"><%= listing.country%></p>
+           
         </div>
     </div>
 
@@ -81,14 +153,16 @@
 
 <% if(currUser && !listing.owner._id.equals(currUser._id) && listing.isAvailable){ %>
 
-<div class="col-6 offset-3 mb-4">
+<div class="col-lg-8 offset-lg-2 mb-4">
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm booking-card">
 
         <div class="card-body">
 
             <h4 class="mb-3">
-                📅 Reserve this stay
+                <i class="fa-solid fa-calendar-days text-danger me-2"></i>
+
+Reserve this stay
             </h4>
 
             <form
@@ -158,12 +232,12 @@
 </div>
 
                 <button
-                    class="btn btn-dark w-100">
+    type="submit"
+    class="btn btn-danger w-100 rounded-pill py-2">
 
-                    Reserve Now
+    Reserve Now
 
-                </button>
-
+</button>
             </form>
 
         </div>
@@ -179,7 +253,7 @@
 
 <% if(currUser && !listing.owner._id.equals(currUser._id) && !listing.isAvailable){ %>
 
-<div class="col-6 offset-3 mb-4">
+<div class="col-lg-8 offset-lg-2 mb-4">
 
     <div class="alert alert-warning">
 
@@ -197,41 +271,54 @@
 
 
 <!-- Edit/Delete Buttons (Only Owner) -->
+<% if(currUser && listing.owner._id.equals(currUser._id)) { %>
 
-<% if(currUser && listing.owner._id.equals(currUser._id)) {%>
+<div class="col-lg-8 offset-lg-2 mb-4">
 
-<div class="btns">
+    <div class="d-flex gap-3">
 
-    <a
-        href="/listings/<%= listing._id %>/edit"
-        class="btn btn-dark col-1 offset-3 edit-btn">
+        <a
+            href="/listings/<%= listing._id %>/edit"
+            class="btn edit-btn rounded-pill px-4 py-2">
 
-        Edit
+            <i class="fa-solid fa-pen me-2"></i>
+            Edit
 
-    </a>
+        </a>
 
-    <form
-        method="POST"
-        action="/listings/<%= listing._id %>?_method=DELETE">
+        <form
+            method="POST"
+            action="/listings/<%= listing._id %>?_method=DELETE"
+            class="m-0">
 
-        <button class="btn btn-dark offset-5">
+            <button
+                class="btn btn-dark rounded-pill px-4 py-2">
 
-            Delete
+                <i class="fa-solid fa-trash me-2"></i>
+                Delete
 
-        </button>
+            </button>
 
-    </form>
+        </form>
+
+    </div>
 
 </div>
 
 <% } %>
   
   
-   <div class="col-8 offset-3 mb-3">
+   <div class="col-lg-8 offset-lg-2 mb-3">
     
     <% if(currUser) { %>
         <hr />
-    <h4> Leave a Review</h4>
+    <h4 class="fw-bold">
+
+<i class="fa-solid fa-star text-warning"></i>
+
+Leave a Review
+
+</h4>
     <form 
         action="/listings/<%= listing.id%>/reviews" 
         method="POST" 
@@ -284,9 +371,17 @@
     
      <% if(listing.reviews.length>0) {%>
     <div class="row">
-        <p><b>All Reviews</b></p>  
+        <h4 class="fw-bold mb-4">
+
+<i class="fa-solid fa-comments text-primary"></i>
+
+Guest Reviews
+
+</h4>
      <% for(review of listing.reviews){%>
-        <div class="card col-5 ms-3 mb-3">
+        <div class="col-lg-6 mb-4">
+
+    <div class="card review-card h-100">
             <div class="card-body">
                 <h5 class="card-title">@<%= review.author.username %></h5>
                 <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
@@ -295,6 +390,9 @@
             <form class="mb-3" method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
                 <button class="btn btn-sm btn-dark">Delete</button>
             </form>
+            </div>
+
+</div>
 
         </div>
      <%}%>
@@ -302,8 +400,14 @@
     <%}%>
     
    </div>
-   <div class="col-6 offset-3">
-        <h3>Where you'll be</h3>
+   <div class="col-lg-8 offset-lg-2">
+        <h3 class="fw-bold mb-3">
+
+<i class="fa-solid fa-location-dot text-danger"></i>
+
+Where you'll be
+
+</h3>
         <div id="map"></div>
     </div>
 </div>

@@ -1,0 +1,113 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow border-0 rounded-4">
+
+                <div class="card-body p-4">
+
+                    <h2 class="fw-bold text-center mb-4">
+
+    <i class="fa-solid fa-user-pen text-primary me-2"></i>
+
+    Edit Profile
+
+</h2>
+
+                    <form action="/profile?_method=PUT" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Name
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="name"
+                                value="<%= user.name %>">
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Phone
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="phone"
+                                value="<%= user.phone %>">
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Location
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="location"
+                                value="<%= user.location %>">
+
+                        </div>
+
+                        <div class="mb-3">
+    <label for="profileImage" class="form-label">Profile Photo</label>
+    <input
+        type="file"
+        class="form-control"
+        id="profileImage"
+        name="profileImage"
+        accept="image/*"
+    >
+</div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Bio
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                rows="5"
+                                name="bio"><%= user.bio %></textarea>
+
+                        </div>
+
+                        <button class="btn btn-dark">
+
+                            Save Changes
+
+                        </button>
+
+                        <a
+                            href="/profile"
+                            class="btn btn-outline-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

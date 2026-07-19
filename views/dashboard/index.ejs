@@ -1,97 +1,92 @@
 <% layout("/layouts/boilerplate") %>
 
-<h2 class="mb-4">
-    🏠 Host Dashboard
-</h2>
+<div class="mb-5">
+   <div class="d-flex justify-content-between align-items-center mb-5">
+
+    <div>
+        <h1 class="fw-bold display-5">
+
+    <i class="fa-solid fa-chart-line text-primary me-2"></i>
+
+    Host Dashboard
+
+</h1>
+
+        <p class="text-muted fs-5 mb-0">
+            Manage your listings, bookings and revenue from one place.
+        </p>
+    </div>
+
+    <a href="/export/bookings" class="btn btn-dark btn-lg">
+        <i class="fa-solid fa-file-pdf me-2"></i>
+
+Export Bookings
+    </a>
+
+    <a href="/export/revenue" class="btn btn-success btn-lg ms-2">
+    <i class="fa-solid fa-file-invoice-dollar me-2"></i>
+
+Revenue Report
+</a>
+
+</div>
+    
+</div>
 
 <div class="row g-4">
 
-    <div class="col-md-4">
+    
 
-        <div class="card shadow-sm">
-
-            <div class="card-body text-center">
-
-                <h5>🏡 Listings</h5>
-
-                <h2><%= totalListings %></h2>
-
+    <div class="col-lg-3 col-md-6">
+        <div class="card dashboard-stat-card text-center">
+            <div class="card-body">
+                <div class="dashboard-stat-icon"><i class="fa-solid fa-house"></i></div>
+                <div class="dashboard-stat-number"><%= totalListings %></div>
+                <div class="dashboard-stat-title">Total Listings</div>
             </div>
-
         </div>
-
     </div>
 
-    <div class="col-md-4">
-
-        <div class="card shadow-sm">
-
-            <div class="card-body text-center">
-
-                <h5>📅 Bookings</h5>
-
-                <h2><%= totalBookings %></h2>
-
+    <div class="col-lg-3 col-md-6">
+        <div class="card dashboard-stat-card text-center">
+            <div class="card-body">
+                <div class="dashboard-stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="dashboard-stat-number"><%= totalBookings %></div>
+                <div class="dashboard-stat-title">Total Bookings</div>
             </div>
-
         </div>
-
     </div>
 
-    <div class="col-md-4">
-
-        <div class="card shadow-sm">
-
-            <div class="card-body text-center">
-
-                <h5>💰 Revenue</h5>
-
-                <h2>₹<%= totalRevenue.toLocaleString("en-IN") %></h2>
-
+    <div class="col-lg-3 col-md-6">
+        <div class="card dashboard-stat-card text-center">
+            <div class="card-body">
+                <div class="dashboard-stat-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                <div class="dashboard-stat-number">
+                    ₹<%= totalRevenue.toLocaleString("en-IN") %>
+                </div>
+                <div class="dashboard-stat-title">Total Revenue</div>
             </div>
-
         </div>
-
     </div>
 
-    <div class="col-md-6">
-
-        <div class="card shadow-sm border-success">
-
-            <div class="card-body text-center">
-
-                <h5>🟢 Available Listings</h5>
-
-                <h2><%= availableListings %></h2>
-
+    <div class="col-lg-3 col-md-6">
+        <div class="card dashboard-stat-card text-center">
+            <div class="card-body">
+                <div class="dashboard-stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="dashboard-stat-number">
+                    <%= availableListings %>/<%= totalListings %>
+                </div>
+                <div class="dashboard-stat-title">Available Listings</div>
             </div>
-
         </div>
-
     </div>
 
-    <div class="col-md-6">
-
-        <div class="card shadow-sm border-danger">
-
-            <div class="card-body text-center">
-
-                <h5>🔴 Unavailable Listings</h5>
-
-                <h2><%= unavailableListings %></h2>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <hr class="my-5">
+</div>
 
 <h3 class="mb-4">
+    <i class="fa-solid fa-clock-rotate-left text-primary me-2"></i>
 
-    📅 Recent Bookings
-
+Recent Bookings
 </h3>
 
 <% if(recentBookings.length === 0){ %>
@@ -106,7 +101,7 @@
 
 <div class="table-responsive">
 
-<table class="table table-bordered align-middle">
+<table class="table table-hover align-middle">
 
 <thead class="table-dark">
 
@@ -116,16 +111,17 @@
 
 <th>Property</th>
 
+<th>Status</th>
+
 <th>Check-In</th>
 
 <th>Check-Out</th>
 
-<th>Total</th>
+<th class="text-end">Total</th>
 
 </tr>
 
 </thead>
-
 <tbody>
 
 <% recentBookings.forEach(booking => { %>
@@ -133,33 +129,61 @@
 <tr>
 
 <td>
+    <i class="fa-solid fa-user me-2 text-secondary"></i> <strong><%= booking.user.username %></strong>
+</td>
 
-<%= booking.user.username %>
-
+<td>
+    <%= booking.listing.title %>
 </td>
 
 <td>
 
-<%= booking.listing.title %>
+    <% if (booking.status === "Confirmed") { %>
+
+        <span class="badge rounded-pill px-3 py-2 bg-success">
+    Confirmed
+</span>
+
+    <% } else if (booking.status === "Cancelled") { %>
+
+        <span class="badge rounded-pill px-3 py-2 bg-danger">
+    Cancelled
+</span>
+
+    <% } else if (booking.status === "Completed") { %>
+
+        <span class="badge rounded-pill px-3 py-2 bg-primary">
+    Completed
+</span>
+
+    <% } else { %>
+
+        <span class="badge rounded-pill px-3 py-2 bg-warning text-dark">
+    Pending
+</span>
+
+    <% } %>
 
 </td>
 
 <td>
-
-<%= booking.checkIn.toLocaleDateString("en-IN") %>
-
+    <%= booking.checkIn.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    }) %>
 </td>
 
 <td>
-
-<%= booking.checkOut.toLocaleDateString("en-IN") %>
-
+    <%= booking.checkOut.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    }) %>
 </td>
 
-<td>
-
-₹<%= booking.totalPrice.toLocaleString("en-IN") %>
-
+<td class="text-end fw-bold text-success">
+    ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
 </td>
 
 </tr>
@@ -174,4 +198,400 @@
 
 <% } %>
 
+<hr class="my-5">
+
+<h3 class="mb-4">
+    🏆 Top Performing Properties
+</h3>
+
+<% if(topProperties.length === 0){ %>
+
+<div class="alert alert-info">
+
+    No bookings available yet.
+
 </div>
+
+<% } else { %>
+
+<div class="row">
+
+<% topProperties.forEach((property, index) => { %>
+
+<div class="col-md-4 mb-4">
+
+<div class="card shadow dashboard-property-card h-100">
+
+    <% if(property.listing && property.listing.image){ %>
+
+        <img
+            src="<%= property.listing.image.url %>"
+            class="card-img-top dashboard-property-image">
+
+    <% } %>
+
+    <div class="card-body">
+
+        <h5 class="fw-bold">
+
+            <% if(index === 0){ %>🥇<% } %>
+            <% if(index === 1){ %>🥈<% } %>
+            <% if(index === 2){ %>🥉<% } %>
+
+            <%= property.listing ? property.listing.title : "Unknown Property" %>
+
+        </h5>
+
+        <% if(property.listing){ %>
+
+            <p class="text-muted mb-2">
+                <i class="fa-solid fa-location-dot text-danger me-2"></i> <%= property.listing.location %>, <%= property.listing.country %>
+            </p>
+
+        <% } %>
+
+        <hr>
+
+        <p class="mb-2">
+            <i class="fa-solid fa-calendar-check text-primary me-2"></i> <strong><%= property.bookings %></strong> Bookings
+        </p>
+
+        <p class="mb-3 text-success fw-bold">
+            <i class="fa-solid fa-indian-rupee-sign text-success me-2"></i> ₹<%= property.revenue.toLocaleString("en-IN") %>
+        </p>
+
+        <% if(property.listing){ %>
+
+            <a
+                href="/listings/<%= property.listing._id %>"
+                class="btn btn-outline-dark w-100">
+
+                <i class="fa-solid fa-eye me-2"></i>
+
+View Property
+
+            </a>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+</div>
+
+<% }) %>
+
+</div>
+
+<% } %>
+
+<hr class="my-5">
+
+<h3 class="mb-4">
+    📋 Booking Summary
+</h3>
+
+<div class="row">
+
+    
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card text-center shadow-sm border-success">
+
+            <div class="card-body">
+
+                <h1>
+    <i class="fa-solid fa-circle-check text-success"></i>
+</h1>
+
+                <h5>Confirmed</h5>
+
+                <h2><%= bookingSummary.confirmed %></h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card text-center shadow-sm border-primary">
+
+            <div class="card-body">
+
+                <h1>
+    <i class="fa-solid fa-circle-check text-primary"></i>
+</h1>
+
+                <h5>Completed</h5>
+
+                <h2><%= bookingSummary.completed %></h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card text-center shadow-sm border-danger">
+
+            <div class="card-body">
+
+                <h1>
+    <i class="fa-solid fa-circle-xmark text-danger"></i>
+</h1>
+
+                <h5>Cancelled</h5>
+
+                <h2><%= bookingSummary.cancelled %></h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<hr class="my-5">
+
+<h3 class="mb-4">
+    💹 Revenue Insights
+</h3>
+
+<div class="row g-4 mb-5">
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card shadow-sm border-0 text-center h-100">
+            <div class="card-body">
+                <h1><i class="fa-solid fa-sack-dollar text-success"></i></h1>
+                <h6 class="text-muted">This Month</h6>
+                <h4 class="fw-bold text-success">
+                    ₹<%= thisMonthRevenue.toLocaleString("en-IN") %>
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card shadow-sm border-0 text-center h-100">
+            <div class="card-body">
+                <h1><i class="fa-solid fa-chart-line text-primary"></i></h1>
+                <h6 class="text-muted">Last Month</h6>
+                <h4 class="fw-bold">
+                    ₹<%= lastMonthRevenue.toLocaleString("en-IN") %>
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card shadow-sm border-0 text-center h-100">
+            <div class="card-body">
+                <h1><i class="fa-solid fa-credit-card text-warning"></i></h1>
+                <h6 class="text-muted">Average Booking</h6>
+                <h4 class="fw-bold">
+                    ₹<%= averageBookingValue.toLocaleString("en-IN") %>
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card shadow-sm border-0 text-center h-100">
+            <div class="card-body">
+                <h1><i class="fa-solid fa-crown text-warning"></i></h1>
+                <h6 class="text-muted">Top Property</h6>
+                <h6 class="fw-bold">
+                    <%= highestEarningProperty %>
+                </h6>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-5">
+
+<h3 class="mb-4">
+    <i class="fa-solid fa-robot text-primary me-2"></i>
+
+AI Host Insights
+</h3>
+
+<div class="card shadow-sm border-0 mb-5">
+
+    <div class="card-body">
+
+        <% if(aiInsights.length === 0){ %>
+
+            <div class="alert alert-success mb-0">
+                🎉 Great! No recommendations at the moment.
+            </div>
+
+        <% } else { %>
+
+            <ul class="list-group list-group-flush">
+
+                <% aiInsights.forEach(insight => { %>
+
+                    <li class="list-group-item">
+                        <%= insight %>
+                    </li>
+
+                <% }) %>
+
+            </ul>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+<h3 class="mb-4">
+    <i class="fa-solid fa-chart-column text-success me-2"></i>
+
+Analytics
+</h3>
+
+<div class="row">
+
+    <div class="col-lg-8 mb-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                <h5 class="mb-3">
+                    Monthly Revenue
+                </h5>
+
+               <div class="chart-container">
+    <canvas id="revenueChart"></canvas>
+</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 mb-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                <h5 class="mb-3">
+                    Booking Status
+                </h5>
+
+               <div class="chart-container-doughnut">
+    <canvas id="bookingStatusChart"></canvas>
+</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const monthlyRevenue = <%- JSON.stringify(monthlyRevenue) %>;
+const bookingSummaryData = <%- JSON.stringify(bookingSummary) %>;
+const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+// Print data in the console
+console.log(monthlyRevenue);
+console.log(bookingSummaryData);
+
+const revenueCtx = document.getElementById("revenueChart");
+
+new Chart(revenueCtx, {
+    type: "bar",
+
+    data: {
+        labels: monthlyRevenue.map(item =>
+    `${monthNames[item._id.month - 1]} ${item._id.year}`
+),
+
+        datasets: [{
+            label: "Monthly Revenue",
+
+            data: monthlyRevenue.map(item => item.revenue),
+
+            backgroundColor: "#ff5a5f",
+            borderRadius: 8
+        }]
+    },
+
+    options: {
+       responsive: true,
+maintainAspectRatio: false,
+
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+
+const statusCtx = document.getElementById("bookingStatusChart");
+
+new Chart(statusCtx, {
+    type: "doughnut",
+
+    data: {
+        labels: [
+           
+            "Confirmed",
+            "Completed",
+            "Cancelled"
+        ],
+
+        datasets: [{
+            data: [
+               
+                bookingSummaryData.confirmed,
+                bookingSummaryData.completed,
+                bookingSummaryData.cancelled
+            ],
+
+            backgroundColor: [
+                
+                "#34a853",
+                "#4285f4",
+                "#ea4335"
+            ],
+
+            borderWidth: 2
+        }]
+    },
+
+    options: {
+        responsive: true,
+maintainAspectRatio: false,
+
+        plugins: {
+            legend: {
+                position: "bottom"
+            }
+        }
+    }
+});
+
+</script>

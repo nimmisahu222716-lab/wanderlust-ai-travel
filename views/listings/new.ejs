@@ -2,7 +2,23 @@
 <div class="row mt-3">
     <div class="col-8 offset-2">
         <br/><br/>
-    <h3>Create a new list</h3>
+    <div class="mb-5">
+
+    <h2 class="fw-bold">
+
+        <i class="fa-solid fa-plus-circle text-primary me-2"></i>
+
+        Create a New Listing
+
+    </h2>
+
+    <p class="text-muted mb-0">
+
+        Fill in the details below to publish your property.
+
+    </p>
+
+</div>
     <form 
       method = "POST" 
       action = "/listings" 
@@ -36,9 +52,13 @@
         required></textarea>
 
     <div class="mt-3">
-    <label for="tone" class="form-label">
-        AI Writing Style
-    </label>
+    <label for="tone" class="form-label fw-semibold">
+
+    <i class="fa-solid fa-wand-magic-sparkles text-primary me-2"></i>
+
+    AI Writing Style
+
+</label>
 
     <select
         id="tone"
@@ -86,27 +106,39 @@
 
     </select>
 </div>
-   <div class="d-flex gap-2 mt-2">
+   <div class="ai-actions mt-3">
 
     <button
         type="button"
         id="generateAI"
-        class="btn btn-outline-secondary btn-sm">
-        ✨ Generate with AI
+        class="btn ai-action-btn">
+
+        <i class="fa-solid fa-wand-magic-sparkles me-2"></i>
+
+        Generate
+
     </button>
 
     <button
         type="button"
         id="improveAI"
-        class="btn btn-outline-secondary btn-sm">
-        ✨ Improve with AI
+        class="btn ai-action-btn">
+
+        <i class="fa-solid fa-pen-to-square me-2"></i>
+
+        Improve
+
     </button>
 
     <button
         type="button"
         id="regenerateAI"
-        class="btn btn-outline-secondary btn-sm">
-        🔄 Regenerate
+        class="btn ai-action-btn">
+
+        <i class="fa-solid fa-rotate-right me-2"></i>
+
+        Regenerate
+
     </button>
 
 </div>
@@ -123,7 +155,13 @@
 </div>
         
        <div class="mb-3">
-         <label for="image" class="form-label">Upload Listing Imge</label>
+         <label for="image" class="form-label fw-semibold">
+
+    <i class="fa-solid fa-image text-success me-2"></i>
+
+    Upload Listing Image
+
+</label>
          <input 
             name = "listing[image]" 
             type = "file" 
@@ -131,7 +169,13 @@
        </div>
 
        <div class="mb-3">
-    <label for="category" class="form-label">Category</label>
+    <label for="category" class="form-label fw-semibold">
+
+    <i class="fa-solid fa-layer-group text-warning me-2"></i>
+
+    Category
+
+</label>
 
     <select
         class="form-select"
@@ -163,7 +207,9 @@
     <div class="mb-3 col-md-4">
 
         <label for="price" class="form-label">
-            Price (₹ / Night)
+            <i class="fa-solid fa-indian-rupee-sign text-success me-2"></i>
+
+Price per Night
         </label>
 
         <input
@@ -181,7 +227,9 @@
     <div class="mb-3 col-md-4">
 
         <label for="maxGuests" class="form-label">
-            Maximum Guests
+           <i class="fa-solid fa-user-group text-primary me-2"></i>
+
+Maximum Guests
         </label>
 
         <input
@@ -203,7 +251,9 @@
     <div class="mb-3 col-md-4">
 
         <label for="country" class="form-label">
-            Country
+            <i class="fa-solid fa-earth-asia text-success me-2"></i>
+
+Country
         </label>
 
         <input
@@ -244,7 +294,13 @@
         
         
         <div class="mb-3">
-            <label for="location" class="form-label">Location</label>
+            <label for="location" class="form-label fw-semibold">
+
+    <i class="fa-solid fa-location-dot text-danger me-2"></i>
+
+    Location
+
+</label>
             <input 
             id="location"
             name = "listing[location]" 
@@ -256,7 +312,13 @@
         </div>
         
         
-        <button class="btn btn-dark add-btn mt-3">Add</button>
+        <button class="btn btn-dark add-btn mt-4 px-5 py-2 rounded-pill">
+
+    <i class="fa-solid fa-circle-plus me-2"></i>
+
+    Create Listing
+
+</button>
       
     </form>
     </div>

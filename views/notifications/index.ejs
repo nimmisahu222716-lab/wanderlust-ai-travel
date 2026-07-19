@@ -1,0 +1,108 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5 mb-5">
+
+    <div class="d-flex align-items-center mb-4">
+
+        <i class="fa-solid fa-bell text-danger fs-2 me-3"></i>
+
+        <div>
+            <h2 class="mb-0">Notifications</h2>
+            <small class="text-muted">
+                Stay updated with your latest bookings and activities.
+            </small>
+        </div>
+
+    </div>
+
+    <% if(notifications.length === 0){ %>
+
+        <div class="text-center py-5">
+
+            <i class="fa-regular fa-bell-slash fa-4x text-secondary mb-3"></i>
+
+            <h4>No Notifications Yet</h4>
+
+            <p class="text-muted">
+                You're all caught up.
+            </p>
+
+        </div>
+
+    <% } else { %>
+
+        <% notifications.forEach(notification => { %>
+
+            <div class="card border-0 shadow-sm rounded-4 mb-4 notification-card">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div class="d-flex">
+
+                            <div class="notification-icon me-3">
+
+                                <i class="fa-solid fa-house text-danger"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h5 class="mb-2">
+
+                                    <%= notification.message %>
+
+                                </h5>
+
+                                <small class="text-muted">
+
+                                    <i class="fa-regular fa-clock"></i>
+
+                                    <%= notification.createdAt.toLocaleString("en-IN") %>
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <% if(!notification.isRead){ %>
+
+                                <form
+                                    action="/notifications/<%= notification._id %>/read?_method=PUT"
+                                    method="POST">
+
+                                    <button class="btn btn-success btn-sm rounded-pill">
+
+                                        ✓ Mark Read
+
+                                    </button>
+
+                                </form>
+
+                            <% } else { %>
+
+                                <span class="badge bg-success rounded-pill px-3 py-2">
+
+                                    Read
+
+                                </span>
+
+                            <% } %>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        <% }) %>
+
+    <% } %>
+
+</div>

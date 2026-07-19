@@ -27,7 +27,13 @@ const aiRouter = require("./routes/ai.js");
 const tripPlannerRouter = require("./routes/tripPlanner");
 const bookingRouter = require("./routes/booking");
 const dashboardRouter = require("./routes/dashboard");
+const pdfRouter = require("./routes/pdf");
 const Stream = require('stream');
+const notificationRoutes =
+require("./routes/notifications");
+const profileRouter = require("./routes/profile");
+const hostRouter = require("./routes/host");
+
 
 
 const dbUrl = process.env.ATLASDB_URL;
@@ -93,24 +99,40 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 const Listing = require("./models/listing");
+const Notification = require("./models/notification");
 
 app.use(async (req, res, next) => {
 
+    res.locals.currUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
-
-    res.locals.isHost = false;
 
     if (req.user) {
 
-        const hostListing = await Listing.findOne({
-            owner: req.user._id
+        const unreadCount = await Notification.countDocuments({
+            recipient: req.user._id,
+            isRead: false
         });
 
-        if (hostListing) {
-            res.locals.isHost = true;
-        }
+        const latestNotifications = await Notification.find({
+            recipient: req.user._id
+        })
+        .sort({ createdAt: -1 })
+        .limit(5);
+
+        res.locals.unreadCount = unreadCount;
+        res.locals.latestNotifications = latestNotifications;
+        const isHost = await Listing.exists({
+    owner: req.user._id
+});
+
+res.locals.isHost = !!isHost;
+
+    } else {
+
+        res.locals.unreadCount = 0;
+        res.locals.latestNotifications = [];
+        res.locals.isHost = false;
 
     }
 
@@ -137,6 +159,15 @@ app.use("/ai-assistant", aiAssistantRouter);
 app.use("/wishlist", wishlistRouter);
 app.use("/bookings", bookingRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/export", pdfRouter);
+app.use(
+    "/notifications",
+    notificationRoutes
+);
+app.use("/profile", profileRouter);
+app.use("/hosts", hostRouter);
+
+
 
 app.all("/{*splat}", (req, res, next)=>{
     next(new ExpressError(404, "Page Not Found"));

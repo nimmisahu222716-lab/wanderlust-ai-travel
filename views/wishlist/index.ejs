@@ -1,14 +1,46 @@
 <% layout("/layouts/boilerplate") %>
 
-<h2 class="mb-4">
-    ❤️ My Wishlist
-</h2>
+<div class="d-flex align-items-center mb-5">
+
+    <i class="fa-solid fa-heart text-danger fs-2 me-3"></i>
+
+    <div>
+
+        <h2 class="fw-bold mb-0">
+            My Wishlist
+        </h2>
+
+        <small class="text-muted">
+            Your saved dream stays.
+        </small>
+
+    </div>
+
+</div>
 
 <% if(wishlist.length === 0){ %>
 
-    <div class="alert alert-info">
-        Your wishlist is empty.
-    </div>
+    <div class="text-center py-5">
+
+    <i class="fa-regular fa-heart fa-5x text-secondary mb-4"></i>
+
+    <h3>Your wishlist is empty</h3>
+
+    <p class="text-muted">
+
+        Save your favourite places and they'll appear here.
+
+    </p>
+
+    <a
+        href="/listings"
+        class="btn btn-outline-dark rounded-pill px-4">
+
+        Explore Listings
+
+    </a>
+
+</div>
 
 <% } else { %>
 
@@ -20,7 +52,7 @@
 
            
 
-                <div class="card listing-card">
+               <div class="card listing-card wishlist-card">
 
                     <img
                         src="<%= listing.image.url %>"
@@ -29,16 +61,31 @@
 
                     <div class="card-body">
 
-    <h5><%= listing.title %></h5>
+    <h5 class="fw-bold mb-2">
 
-    <p>
-        ₹<%= listing.price %> / night
-    </p>
+    <%= listing.title %>
 
-    <p>
-        <%= listing.location %>,
-        <%= listing.country %>
-    </p>
+</h5>
+
+    <p class="fw-semibold mb-2">
+
+    <i class="fa-solid fa-indian-rupee-sign text-success me-1"></i>
+
+    ₹<%= listing.price.toLocaleString("en-IN") %>
+
+    <span class="text-muted fw-normal">
+        / night
+    </span>
+
+</p>
+
+    <p class="text-muted">
+
+    <i class="fa-solid fa-location-dot text-danger me-2"></i>
+
+    <%= listing.location %>, <%= listing.country %>
+
+</p>
 
     <div class="d-flex justify-content-between mt-3">
 
@@ -46,7 +93,9 @@
             href="/listings/<%= listing._id %>"
             class="btn btn-outline-dark btn-sm">
 
-            View Listing
+           <i class="fa-solid fa-eye me-1"></i>
+
+View
 
         </a>
 
@@ -62,7 +111,9 @@
             <button
     class="btn btn-outline-danger btn-sm">
 
-    🗑 Remove
+    <i class="fa-solid fa-trash me-1"></i>
+
+Remove
 
 </button>
 

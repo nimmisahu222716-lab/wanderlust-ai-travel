@@ -1,0 +1,155 @@
+<% layout("/layouts/boilerplate") %>
+
+<h2 class="mb-4">
+    📋 Manage Bookings
+</h2>
+
+<% if(bookings.length === 0){ %>
+
+<div class="alert alert-info">
+    No bookings available.
+</div>
+
+<% } else { %>
+
+<div class="table-responsive">
+
+<table class="table table-hover align-middle">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Guest</th>
+
+<th>Property</th>
+
+<th>Status</th>
+
+<th>Check In</th>
+
+<th>Total</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% bookings.forEach(booking => { %>
+
+<tr>
+
+<td>
+    <%= booking.user.username %>
+</td>
+
+<td>
+    <%= booking.listing.title %>
+</td>
+
+<td>
+
+<% if(booking.status === "Confirmed"){ %>
+
+<span class="badge bg-success">
+    Confirmed
+</span>
+
+<% } else if(booking.status === "Pending"){ %>
+
+<span class="badge bg-warning text-dark">
+    Pending
+</span>
+
+<% } else if(booking.status === "Completed"){ %>
+
+<span class="badge bg-primary">
+    Completed
+</span>
+
+<% } else { %>
+
+<span class="badge bg-danger">
+    Cancelled
+</span>
+
+<% } %>
+
+</td>
+
+<td>
+
+<%= booking.checkIn.toLocaleDateString("en-IN") %>
+
+</td>
+
+<td>
+
+₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+
+</td>
+
+<td>
+
+<% if(booking.status === "Confirmed"){ %>
+
+<form
+    action="/dashboard/bookings/<%= booking._id %>/complete?_method=PUT"
+    method="POST"
+    class="d-inline">
+
+    <button class="btn btn-success btn-sm">
+
+        Complete
+
+    </button>
+
+</form>
+
+<form
+    action="/dashboard/bookings/<%= booking._id %>/cancel?_method=PUT"
+    method="POST"
+    class="d-inline">
+
+    <button class="btn btn-danger btn-sm">
+
+        Cancel
+
+    </button>
+
+</form>
+
+<% } else if(booking.status === "Completed"){ %>
+
+<span class="badge bg-primary">
+
+Completed
+
+</span>
+
+<% } else { %>
+
+<span class="badge bg-danger">
+
+Cancelled
+
+</span>
+
+<% } %>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+
+<% } %>

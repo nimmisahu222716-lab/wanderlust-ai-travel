@@ -1,156 +1,6 @@
 <% layout("/layouts/boilerplate")%>
 
-<style>
-    
 
-.filters-container{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:2rem;
-    margin-top:1rem;
-}
-
-#filters{
-    display:flex;
-    align-items:center;
-    gap:.4rem;
-
-    overflow-x:auto;
-    overflow-y:hidden;
-
-    flex-wrap:nowrap;
-
-    scrollbar-width:none;
-
-    flex:1;
-}
-
-#filters::-webkit-scrollbar{
-    display:none;
-}
-
-.filter {
-    flex: 0 0 auto;
-    text-align: center;
-    margin-right: 0;
-    margin-top: 1rem;
-    opacity: 0.75;
-    color: black;
-    padding: 0.6rem 0.9rem;
-    border-radius: 18px;
-    transition: all 0.25s ease;
-}
-
-    .filter:hover{
-        opacity: 1;
-        cursor: pointer;
-    }
-
-    .filter-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-.filter-link:hover {
-    color: inherit;
-}
-
-.filter.active{
-    background:#F8F4FF;
-    border:1px solid #E9D5FF;
-    color:#5F4B8B;
-    opacity:1;
-}
-
-/* .filter.active i,
-.filter.active p {
-    color: #444;
-} */
-
-.filter {
-    transition: all 0.25s ease;
-}
-
-.filter:hover{
-    opacity:1;
-    cursor:pointer;
-    transform:translateY(-2px);
-}
-
-.filter p{
-    font-size:0.82rem;
-    margin-top:0.35rem;
-    margin-bottom:0;
-}
-
-.filter i{
-    font-size:1.15rem;
-}
-
-    .tax-info{
-        display: none;
-    }
-
-   .tax-toggle{
-    flex-shrink:0;
-
-    border:1px solid #ddd;
-
-    border-radius:16px;
-
-    padding:.8rem 1rem;
-
-    background:white;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-
-    .filter-link {
-    text-decoration: none;
-    color: black;
-    display: inline-block;
-}
-
-.filter-link:hover {
-    color: black;
-    text-decoration: none;
-}
-
-.filter-link:visited {
-    color: black;
-}
-
-.filter-link:active {
-    color: black;
-}
-
-.listing-link{
-    text-decoration:none;
-    color:inherit;
-}
-
-.listing-link:hover{
-    text-decoration:none;
-    color:inherit;
-}
-
-.listing-card{
-    border:none !important;
-    margin-bottom:2rem;
-    transition:all .25s ease;
-    position: relative;
-}
-
-.listing-card:hover{
-    transform:translateY(-4px);
-}
-
-.card-img-top{
-    border-radius:18px;
-    object-fit:cover;
-}
-</style>
 
 
 
@@ -258,9 +108,27 @@
     
 
 
+<% if(allListings.length === 0){ %>
+
+<div class="text-center py-5">
+
+    <i class="fa-solid fa-house-circle-xmark fa-4x text-secondary mb-3"></i>
+
+    <h3>No Properties Found</h3>
+
+    <p class="text-muted">
+
+        Try searching with different keywords or choose another category.
+
+    </p>
+
+</div>
+
+<% } else { %>
 
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-    <% for(let listing of allListings){%>   
+
+    <% for(let listing of allListings){ %>
          <a href="/listings/<%= listing._id %>" class="listing-link">
         <div class="card col listing-card" >
           <img 
@@ -276,26 +144,41 @@
         method="POST">
 
         <button
-            class="btn border-0 bg-transparent fs-4">
+    class="btn border-0 bg-transparent fs-4 wishlist-btn">
 
-            🤍
+    <i class="fa-regular fa-heart"></i>
 
-        </button>
+</button>
 
     </form>
 
 </div>
            <div class="card-body">
-             <p class="card-text">
-              <b><%= listing.title %></b><br/>
-              &#8377; <%= listing.price%> / night
-              <i class="tax-info">&nbsp; &nbsp;+18% GST</i>
-             </p>
-            </div>
+
+    <h5 class="listing-title">
+        <%= listing.title %>
+    </h5>
+
+    <div class="listing-price">
+
+        ₹<%= listing.price.toLocaleString("en-IN") %>
+
+        <span>/ night</span>
+
+        <i class="tax-info">
+            &nbsp;&nbsp;+18% GST
+        </i>
+
+    </div>
+
+</div>
         </div>
         </a>
-    <%}%>  
-</div>    
+       <% } %>
+
+</div>
+
+<% } %>    
 
 <script>
     let taxSwitch = document.getElementById("flexSwitchCheckDefault");

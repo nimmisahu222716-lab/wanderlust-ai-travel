@@ -1,5 +1,7 @@
 const Booking = require("../models/booking");
 const Listing = require("../models/listing");
+const { sendBookingConfirmation } = require("../utils/mailer");
+const Notification = require("../models/notification");
 
 // Create Booking
 module.exports.createBooking = async (req, res) => {
@@ -78,6 +80,36 @@ module.exports.createBooking = async (req, res) => {
         });
 
         await booking.save();
+
+        // Notification for Guest
+await Notification.create({
+    recipient: req.user._id,
+    sender: listing.owner,
+    listing: listing._id,
+    message: `Your booking for "${listing.title}" has been confirmed.`,
+    type: "booking"
+});
+
+// Notification for Host
+await Notification.create({
+    recipient: listing.owner,
+    sender: req.user._id,
+    listing: listing._id,
+    message: `${req.user.username} booked your property "${listing.title}".`,
+    type: "booking"
+});
+
+        await sendBookingConfirmation(
+    req.user.email,
+    {
+        username: req.user.username,
+        property: listing.title,
+        checkIn,
+        checkOut,
+        guests,
+        totalPrice
+    }
+);
 
         req.flash(
             "success",

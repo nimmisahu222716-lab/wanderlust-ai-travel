@@ -1,14 +1,46 @@
 <% layout("/layouts/boilerplate") %>
 
-<h2 class="mb-4">
-    📅 My Bookings
-</h2>
+<div class="d-flex align-items-center mb-5">
+
+    <i class="fa-solid fa-calendar-check text-primary fs-2 me-3"></i>
+
+    <div>
+
+        <h2 class="fw-bold mb-0">
+            My Bookings
+        </h2>
+
+        <small class="text-muted">
+            Manage your upcoming and past stays.
+        </small>
+
+    </div>
+
+</div>
 
 <% if(bookings.length === 0){ %>
 
-    <div class="alert alert-info">
-        You haven't made any bookings yet.
-    </div>
+    <div class="text-center py-5">
+
+    <i class="fa-solid fa-calendar-xmark fa-5x text-secondary mb-4"></i>
+
+    <h3>No bookings yet</h3>
+
+    <p class="text-muted">
+
+        Book your first stay and it will appear here.
+
+    </p>
+
+    <a
+        href="/listings"
+        class="btn btn-outline-dark rounded-pill px-4">
+
+        Explore Listings
+
+    </a>
+
+</div>
 
 <% } else { %>
 
@@ -18,7 +50,7 @@
 
 <div class="col-md-6 mb-4">
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm booking-history-card">
 
         <img
             src="<%= booking.listing.image.url %>"
@@ -27,40 +59,51 @@
 
         <div class="card-body">
 
-            <h5>
-                <%= booking.listing.title %>
-            </h5>
+            <h5 class="fw-bold mb-3">
 
-            <p>
-                📅
-                <%= booking.checkIn.toDateString() %>
+    <%= booking.listing.title %>
 
-                →
+</h5>
 
-                <%= booking.checkOut.toDateString() %>
-            </p>
+            <p class="mb-2">
 
-            <p>
-                👥 Guests:
-                <%= booking.guests %>
-            </p>
+    <i class="fa-solid fa-calendar-days text-primary me-2"></i>
 
-            <p>
-                💰 Total:
-                ₹<%= booking.totalPrice %>
-            </p>
+    <%= booking.checkIn.toDateString() %>
+
+    <i class="fa-solid fa-arrow-right mx-2 text-muted"></i>
+
+    <%= booking.checkOut.toDateString() %>
+
+</p>
+
+            <p class="mb-2">
+
+    <i class="fa-solid fa-user-group text-success me-2"></i>
+
+    <strong><%= booking.guests %></strong> Guest(s)
+
+</p>
+
+            <p class="fw-semibold">
+
+    <i class="fa-solid fa-indian-rupee-sign text-success me-2"></i>
+
+    ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+
+</p>
 
             <p>
 
                 <% if(booking.status === "Confirmed"){ %>
 
-                    <span class="badge bg-success">
+                   <span class="badge rounded-pill bg-success px-3 py-2">
                         Confirmed
                     </span>
 
                 <% } else { %>
 
-                    <span class="badge bg-danger">
+                    <span class="badge rounded-pill bg-danger px-3 py-2">
                         Cancelled
                     </span>
 
@@ -73,7 +116,9 @@
         href="/listings/<%= booking.listing._id %>"
         class="btn btn-dark">
 
-        View Listing
+        <i class="fa-solid fa-eye me-1"></i>
+
+View
 
     </a>
 
@@ -86,7 +131,9 @@
             <button
                 class="btn btn-outline-danger">
 
-                Cancel Booking
+                <i class="fa-solid fa-ban me-1"></i>
+
+Cancel
 
             </button>
 

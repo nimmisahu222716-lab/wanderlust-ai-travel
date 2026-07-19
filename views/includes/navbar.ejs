@@ -63,6 +63,112 @@
     </a>
 </li>
 
+
+<li class="nav-item dropdown">
+
+    <a
+        class="nav-link dropdown-toggle position-relative"
+        href="#"
+        id="notificationDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+
+        <i class="fa-solid fa-bell"></i>
+
+        <% if(unreadCount > 0){ %>
+
+            <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                <%= unreadCount %>
+
+            </span>
+
+        <% } %>
+
+    </a>
+
+    <ul
+    class="dropdown-menu dropdown-menu-end shadow"
+    aria-labelledby="notificationDropdown"
+    style="
+        width:400px;
+        max-height:420px;
+        overflow-y:auto;
+        overflow-x:hidden;
+    ">
+        <li>
+            <h6 class="dropdown-header">
+                🔔 Notifications
+            </h6>
+        </li>
+
+        <% if(latestNotifications.length === 0){ %>
+
+            <li>
+
+                <span class="dropdown-item-text text-muted">
+                    No notifications yet.
+                </span>
+
+            </li>
+
+        <% } else { %>
+
+            <% latestNotifications.forEach(notification => { %>
+
+                <li>
+
+                   <a
+    class="dropdown-item py-3"
+    style="white-space: normal;"
+    href="/notifications">
+
+                        <div
+    class="fw-semibold"
+    style="white-space: normal; word-break: break-word;">
+
+    <%= notification.message %>
+
+</div>
+
+                        <small class="text-muted">
+
+                            <%= notification.createdAt.toLocaleString("en-IN") %>
+
+                        </small>
+
+                    </a>
+
+                </li>
+
+            <% }) %>
+
+        <% } %>
+
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+
+        <li>
+
+            <a
+                class="dropdown-item text-center fw-bold"
+                href="/notifications">
+
+                View All Notifications →
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</li>
+
+
+
 <% if(isHost){ %>
 
 <li class="nav-item">
@@ -94,11 +200,15 @@ value="<%= typeof search !== 'undefined' ? search : '' %>">
       </div>
 
       <div class="navbar-nav ms-auto">
+        
         <a class="nav-link" href="/listings/new">Airbnb your home</a>
         <% if(!currUser){ %>
         <a class="nav-link "  href="/signup"><b>Signup</b></a>
         <a class="nav-link" href="/login"><b>Login</b></a>
         <% } %> <% if(currUser){ %>
+          <a class="nav-link" href="/profile">
+    👤 Profile
+</a>
         <a class="nav-link" href="/logout"><b>Logout</b></a>
         <% } %>
       </div>

@@ -131,6 +131,13 @@ module.exports.createListing = async (req, res, next) => {
 
         let savedListing = await newListing.save();
 
+const user = await User.findById(req.user._id);
+
+if (!user.isHost) {
+    user.isHost = true;
+    await user.save();
+}
+
         console.log("Saved Listing:");
         console.log(savedListing);
 
