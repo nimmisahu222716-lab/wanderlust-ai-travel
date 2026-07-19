@@ -28,7 +28,9 @@ WanderLust AI is a full-stack web application that enables users to discover uni
 
 ##  Project Preview
 
-![WanderLust AI Home](screenshots/home.png)
+<p align="center">
+<img src="screenshots/home.png" alt="Home" width="700">
+</p>
 
 ##  Key Highlights
 
@@ -117,15 +119,18 @@ GEMINI_API_KEY=
 
 Explore featured listings, categories, and a clean, user-friendly interface.
 
-![Home Page](screenshots/home.png)
-
+<p align="center">
+<img src="screenshots/home.png" alt="Home" width="700">
+</p>
 ---
 
 ###  Property Details
 
 View detailed property information, pricing, amenities, and images.
 
-![Property Details](screenshots/listing_details.png)
+<p align="center">
+<img src="screenshots/listing_details.png" alt="Listing Details" width="700">
+</p>
 
 ---
 
@@ -133,7 +138,9 @@ View detailed property information, pricing, amenities, and images.
 
 Read user reviews and view the property's location with Mapbox integration.
 
-![Reviews & Map](screenshots/review_map.png)
+<p align="center">
+<img src="screenshots/review_map.png" alt="Review & Map" width="700">
+</p>
 
 ---
 
@@ -141,7 +148,9 @@ Read user reviews and view the property's location with Mapbox integration.
 
 Generate personalized travel plans based on your destination and preferences.
 
-![AI Travel Planner](screenshots/ai_travel_planner.png)
+<p align="center">
+<img src="screenshots/ai_travel_planner.png" alt="AI Travel Planner" width="700">
+</p>
 
 ---
 
@@ -149,7 +158,9 @@ Generate personalized travel plans based on your destination and preferences.
 
 Get instant travel recommendations and assistance using AI.
 
-![AI Travel Assistant](screenshots/ai_travel_assistant.png)
+<p align="center">
+<img src="screenshots/ai_travel_assistant.png" alt="AI Travel Assistant" width="700">
+</p>
 
 ---
 
@@ -157,7 +168,9 @@ Get instant travel recommendations and assistance using AI.
 
 Book properties with live price calculation and double-booking prevention.
 
-![Booking System](screenshots/booking.png)
+<p align="center">
+<img src="screenshots/booking.png" alt="Booking System" width="700">
+</p>
 
 ---
 
@@ -165,23 +178,28 @@ Book properties with live price calculation and double-booking prevention.
 
 Monitor bookings, listings, and key platform statistics.
 
-![Dashboard Overview](screenshots/dashboard_overview.png)
+<p align="center">
+<img src="screenshots/dashboard_overview.png" alt="Host Dashboard Overview
+" width="700">
+</p>
 
 ---
 
 ###  Host Dashboard – Revenue Analytics
 
 Track earnings and booking insights with detailed analytics.
-
-![Revenue Analytics](screenshots/analytics_revenue.png)
-
+<p align="center">
+<img src="screenshots/analytics_revenue.png" alt="Analytics & Revenue" width="700">
+</p>
 ---
 
-### ➕ Create Listing
+###  Create Listing
 
 Create a new property listing with images, location, pricing, and other details.
 
-![Create Listing](screenshots/create_listing.png)
+<p align="center">
+  <img src="screenshots/create_listing.png" alt="Create Listing" width="450">
+</p>
 
 ---
 
@@ -189,15 +207,19 @@ Create a new property listing with images, location, pricing, and other details.
 
 Update listing details anytime through an intuitive editing interface.
 
-![Edit Listing](screenshots/edit_listing.png)
+<p align="center">
+  <img src="screenshots/edit_listing.png" alt="Edit Listing" width="450">
+</p>
 
 ---
 
-### 👤 User Profile
+###  User Profile
 
 Manage profile information and access personalized account details.
 
-![User Profile](screenshots/user_profile.png)
+<p align="center">
+  <img src="screenshots/user_profile.png" alt="User Profile" width="400">
+</p>
 
 ##  Future Enhancements
 
