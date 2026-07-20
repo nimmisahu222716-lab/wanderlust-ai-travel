@@ -191,6 +191,7 @@ Track earnings and booking insights with detailed analytics.
 <p align="center">
 <img src="screenshots/analytics_revenue.png" alt="Analytics & Revenue" width="700">
 </p>
+
 ---
 
 ###  Create Listing
@@ -229,7 +230,7 @@ Manage profile information and access personalized account details.
 - Multi-language support
 
 
-## 👨‍💻 Author
+##  Author
 
 **Nimmi Sahu**
 
@@ -241,6 +242,6 @@ Manage profile information and access personalized account details.
  **Project Repository:** https://github.com/nimmisahu222716-lab/wanderlust-ai-travel
 
  **Live Demo:** https://wanderlust-ai-travel.onrender.com
- 
+
  **LinkedIn:** https://www.linkedin.com/in/nimmi-sahu-511b77324
 
