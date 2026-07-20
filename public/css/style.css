@@ -27,6 +27,19 @@ body{
     color: #222222 !important;
 }
 
+.navbar-nav{
+    align-items:center;
+}
+
+.navbar-nav .nav-link{
+    padding-left:.7rem !important;
+    padding-right:.7rem !important;
+}
+
+.navbar form{
+    margin-right:1rem;
+}
+
 /*footer*/
 .f-info-links a{
     text-decoration: none;
@@ -864,4 +877,24 @@ body{
 
     padding:2rem;
 
+}
+
+/* Premium Account Button */
+
+.account-menu{
+    border:1px solid #ddd;
+    border-radius:30px;
+    padding:8px 16px !important;
+    transition:.3s ease;
+}
+
+.account-menu:hover{
+    background:#fff;
+    box-shadow:0 6px 18px rgba(0,0,0,.10);
+}
+
+
+
+#notificationDropdown{
+    margin-right: 12px;
 }

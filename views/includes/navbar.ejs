@@ -17,10 +17,11 @@
   }
 
   .search-inp{
-    border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
-    font-size: 1rem;
-  }
+    width:220px;
+    border-radius:25px;
+    padding:0.5rem 1rem;
+    font-size:0.95rem;
+}
 </style>
 
 <nav class="navbar navbar-expand-md bg-light border-bottom sticky-top">
@@ -41,15 +42,37 @@
         Explore
     </a>
 
-    <a class="nav-link" href="/trip-planner">
-        <i class="fa-solid fa-route me-1"></i>
-        AI Travel Planner
+    <li class="nav-item dropdown">
+    <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        id="aiDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+
+        <i class="fa-solid fa-robot me-1"></i>
+        AI
     </a>
 
-    <a class="nav-link" href="/ai-assistant">
-    <i class="fa-solid fa-robot me-1"></i>
-    AI Travel Assistant
-</a>
+    <ul class="dropdown-menu shadow" aria-labelledby="aiDropdown">
+
+        <li>
+            <a class="dropdown-item" href="/trip-planner">
+                <i class="fa-solid fa-route me-2"></i>
+                Travel Planner
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item" href="/ai-assistant">
+                <i class="fa-solid fa-comments me-2"></i>
+                Travel Assistant
+            </a>
+        </li>
+
+    </ul>
+</li>
 
 <li class="nav-item">
     <a class="nav-link" href="/wishlist">
@@ -63,6 +86,47 @@
     </a>
 </li>
 
+
+
+
+
+<% if(isHost){ %>
+
+<li class="nav-item">
+
+    <a
+        class="nav-link"
+        href="/dashboard">
+
+        <i class="fa-solid fa-chart-line me-1"></i>
+        Dashboard
+
+    </a>
+
+</li>
+
+<% } %>
+
+</div>
+
+      <div class="navbar-nav ms-auto align-items-center">
+        <form class="d-flex me-3" role="search" method="GET" action="/listings">
+          <input
+class="form-control me-2"
+type="search"
+name="search"
+placeholder="Search destinations"
+value="<%= typeof search !== 'undefined' ? search : '' %>">
+          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
+      
+
+      
+        
+        <a class="nav-link" href="/listings/new">
+    <i class="fa-solid fa-house-circle-plus me-1"></i>
+    Become a Host
+</a>
 
 <li class="nav-item dropdown">
 
@@ -168,49 +232,60 @@
 </li>
 
 
+        <% if(!currUser){ %>
+        <a class="nav-link "  href="/signup"><b>Signup</b></a>
+        <a class="nav-link" href="/login"><b>Login</b></a>
+        <% } %> 
+        <% if(currUser){ %>
 
-<% if(isHost){ %>
-
-<li class="nav-item">
+<li class="nav-item dropdown me-3">
 
     <a
-        class="nav-link"
-        href="/dashboard">
+        class="nav-link dropdown-toggle account-menu"
+        href="#"
+        id="accountDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
 
-        🏠 Host Dashboard
+        <i class="fa-solid fa-user me-1"></i>
+        Account
 
     </a>
+
+    <ul
+        class="dropdown-menu dropdown-menu-end shadow"
+        aria-labelledby="accountDropdown">
+
+        <li>
+
+            <a class="dropdown-item" href="/profile">
+
+                <i class="fa-solid fa-user me-2"></i>
+                My Profile
+
+            </a>
+
+        </li>
+
+        <li><hr class="dropdown-divider"></li>
+
+        <li>
+
+            <a class="dropdown-item text-danger" href="/logout">
+
+                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                Logout
+
+            </a>
+
+        </li>
+
+    </ul>
 
 </li>
 
 <% } %>
-
-</div>
-
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search" method="GET" action="/listings">
-          <input
-class="form-control me-2"
-type="search"
-name="search"
-placeholder="Search destinations"
-value="<%= typeof search !== 'undefined' ? search : '' %>">
-          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-        </form>
-      </div>
-
-      <div class="navbar-nav ms-auto">
-        
-        <a class="nav-link" href="/listings/new">Airbnb your home</a>
-        <% if(!currUser){ %>
-        <a class="nav-link "  href="/signup"><b>Signup</b></a>
-        <a class="nav-link" href="/login"><b>Login</b></a>
-        <% } %> <% if(currUser){ %>
-          <a class="nav-link" href="/profile">
-    👤 Profile
-</a>
-        <a class="nav-link" href="/logout"><b>Logout</b></a>
-        <% } %>
       </div>
     </div>
   </div>
