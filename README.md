@@ -228,13 +228,19 @@ Manage profile information and access personalized account details.
 - Calendar synchronization
 - Multi-language support
 
-##  Author
+
+## 👨‍💻 Author
 
 **Nimmi Sahu**
 
 - MCA Student, Jawaharlal Nehru University (JNU)
 - Full Stack MERN Developer
 
-- **GitHub:** https://github.com/nimmisahu222716-lab
-- **LinkedIn:** https://www.linkedin.com/in/nimmi-sahu-511b77324
+ **GitHub Profile:** https://github.com/nimmisahu222716-lab
+
+ **Project Repository:** https://github.com/nimmisahu222716-lab/wanderlust-ai-travel
+
+ **Live Demo:** https://wanderlust-ai-travel.onrender.com
+ 
+ **LinkedIn:** https://www.linkedin.com/in/nimmi-sahu-511b77324
 
